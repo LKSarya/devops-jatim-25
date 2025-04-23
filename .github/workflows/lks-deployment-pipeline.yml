@@ -1,8 +1,6 @@
-name: Example Gatus' Job (1/2) - Build Gatus
-
 # FILL THE MISSING VALUES BELOW
 on:
-  workflow_dispatch: 
+  workflow_dispatch: lks-build-gatus.yml
 
 env:
   AWS_REGION: us-east-1
@@ -63,12 +61,9 @@ jobs:
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
 
-
-name: Example Gatus' Job (2/2) - Deploy Gatus
-
 # FILL THE MISSING VALUES BELOW
 on:
-  workflow_dispatch:
+  workflow_dispatch: lks-deploy-gatus.yml
 
 env:
   AWS_REGION: us-east-1
@@ -108,11 +103,8 @@ jobs:
           run-task-tags: '[{"key": "", "value": ""} , ...]'
 
 
-name: Example Job - Deploy Leantime
-
-# FILL THE MISSING VALUES BELOW
 on:
-  workflow_dispatch:
+  workflow_dispatch: lks-deploy-leantime.yml
 
 env:
   AWS_REGION: us-east-1
