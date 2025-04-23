@@ -1,7 +1,4 @@
-# FILL THE MISSING VALUES BELOW
-on:
-  workflow_dispatch: lks-build-gatus.yml , lks-deploy-gatus.yml , lks-deploy-leantime.yml
-
+# FILL THE 
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: 339712720182.dkr.ecr.us-east-1.amazonaws.com/lks-gatus
