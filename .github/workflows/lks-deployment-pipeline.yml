@@ -61,3 +61,48 @@ jobs:
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+
+
+
+name: Example Gatus' Job (2/2) - Deploy Gatus
+
+# FILL THE MISSING VALUES BELOW
+on:
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: 339712720182.dkr.ecr.us-east-1.amazonaws.com/lks-gatus
+  ECS_CLUSTER: arn:aws:ecs:us-east-1:339712720182:cluster/lks-oss-cluster
+  TOKEN: ${{ secrets.TOKEN }}
+
+  ECS_GATUS_SERVICE: arn:aws:ecs:us-east-1:339712720182:service/lks-oss-cluster/gatus-service
+  GATUS_TASK_DEFINITION: arn:aws:ecs:us-east-1:339712720182:task-definition/lks-gatus-task-definitions:1
+  GATUS_URL: "??? ${{ secrets.ALB_ENDPOINT }} ???"
+# FILL THE MISSING VALUES ABOVE
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy Gatus App
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # add build steps here
+
+      - name: Update ECS task definition
+        run: |
+          sed -i "s|<task-def-image>|$IMAGE_FULL_URI|g" $GATUS_TASK_DEFINITION
+          echo "Task definition updated."
+          cat $GATUS_TASK_DEFINITION
+
+      - name: deploy ecs task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ env.gatus_task_definition }}
+          service: ${{ env.ecs_gatus_service }}
+          cluster: ${{ env.ecs_cluster }}
+          force-new-deployment: true
+          run-task-tags: '[{"key": "", "value": ""} , ...]'
