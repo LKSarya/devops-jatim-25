@@ -1,7 +1,7 @@
 name: Example Job - Deploy Leantime
 
 # FILL THE MISSING VALUES BELOW
-on:
+on: [push]
   workflow_dispatch:
 
 env:
