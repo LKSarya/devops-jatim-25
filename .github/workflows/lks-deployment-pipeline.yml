@@ -1,6 +1,6 @@
 # FILL THE MISSING VALUES BELOW
 on:
-  workflow_dispatch: lks-build-gatus.yml
+  workflow_dispatch: lks-build-gatus.yml , lks-deploy-gatus.yml , lks-deploy-leantime.yml
 
 env:
   AWS_REGION: us-east-1
@@ -61,10 +61,6 @@ jobs:
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
 
-# FILL THE MISSING VALUES BELOW
-on:
-  workflow_dispatch: lks-deploy-gatus.yml
-
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: 339712720182.dkr.ecr.us-east-1.amazonaws.com/lks-gatus
@@ -102,9 +98,6 @@ jobs:
           force-new-deployment: true
           run-task-tags: '[{"key": "", "value": ""} , ...]'
 
-
-on:
-  workflow_dispatch: lks-deploy-leantime.yml
 
 env:
   AWS_REGION: us-east-1
